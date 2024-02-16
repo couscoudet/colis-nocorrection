@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.fr.indyli.formation.web.ecolis</groupId>
+  <artifactId>colis-ws</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <name>colis-ws</name> 
+  <description>Pour l'exposition REST des services de gestion de colis</description>
+  
+  <parent> 
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.7</version>
+		<relativePath />
+  </parent> 
+  
+  <properties>
+		<java.version>17</java.version>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<spring-testdbunit.version>1.3.0</spring-testdbunit.version>
+		<org.dbunit.version>2.5.4</org.dbunit.version>
+		<com.github.jmnarloch.version>1.0.1</com.github.jmnarloch.version>
+		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+	</properties>
+	
+	<dependencies> 
+	    <dependency>
+			<groupId>eu.fr.indyli.formation.business.ecolis</groupId>
+			<artifactId>ecoliss-business</artifactId>
+			<version>1.0.2-SNAPSHOT</version>
+		</dependency> 
+	    <!-- Spring security -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-resources-plugin</artifactId>
+			    <version>3.1.0</version>
+			</plugin>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-compiler-plugin</artifactId>
+			   <configuration>
+			      <source>17</source>
+			      <target>17</target>
+			   </configuration>
+			</plugin>  
+		</plugins>
+	</build>
+    <distributionManagement>
+	   <snapshotRepository>
+	      <id>ecolis-repo</id>
+	      <url>http://nexus.indyli-services.com/repository/ecolis-repo/</url>
+	   </snapshotRepository>
+	   <repository>
+	      <id>ecolis-repo</id>
+	      <url>http://nexus.indyli-services.com/repository/ecolis-repo/</url>
+	   </repository>
+	</distributionManagement> 
+</project>
