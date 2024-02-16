@@ -25,6 +25,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import eu.fr.indyli.formation.business.dto.MessageBasicDTO;
+import eu.fr.indyli.formation.business.dto.MessageFullDTO;
 import eu.fr.indyli.formation.business.ecolis.service.impl.MessageServiceImpl;
 import eu.fr.indyli.formation.business.entity.Message;
 import eu.fr.indyli.formation.transactionnel.ecolis.boot.SpringConfigWebApplication;
@@ -49,7 +51,7 @@ public class MessageRestControllerMockTest {
   @Test
   public void itShouldReturnOneMessageById() throws Exception {
     // Given
-    Message message1 = new Message(1, "Pourrez vous déposer à Suresnes", new Date());
+    MessageFullDTO message1 = new MessageFullDTO(1, "Pourrez vous déposer à Suresnes", new Date());
     // When
     when(this.messageService.findById(1)).thenReturn(message1);
 
@@ -66,7 +68,7 @@ public class MessageRestControllerMockTest {
   public void itShouldReturnAllTheMessages() throws Exception {
     // Given
     // TODO : Initialiser la collection
-    List<Message> messages = null;
+    List<MessageBasicDTO> messages = null;
 
     // When
     when(this.messageService.findAll()).thenReturn(messages);

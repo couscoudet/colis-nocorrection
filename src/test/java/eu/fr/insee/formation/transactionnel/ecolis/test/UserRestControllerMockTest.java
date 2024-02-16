@@ -21,8 +21,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import eu.fr.indyli.formation.business.dto.UtilisateurBasicDTO;
 import eu.fr.indyli.formation.business.ecolis.service.impl.UtilisateurServiceImpl;
-import eu.fr.indyli.formation.business.entity.Utilisateur;
 import eu.fr.indyli.formation.transactionnel.ecolis.boot.SpringConfigWebApplication;
 import eu.fr.indyli.formation.transactionnel.ecolis.utils.EcolisConstantesWeb.EcolisConstantesURI;
 
@@ -56,13 +56,13 @@ public class UserRestControllerMockTest {
   @Test
   public void itShouldReturnAllGivenUsers() throws Exception {
     // Given
-    Utilisateur user = new Utilisateur();
-    user.setIdUtilisateur(2);
-    user.setCivilite("1");
+    UtilisateurBasicDTO user = new UtilisateurBasicDTO();
+    user.setId(2);
+    user.setCivility("1");
     user.setName("Le Guene");
-    user.setAnneeDeNaissance(1989);
-    user.setTelephone("0761705745");
-    List<Utilisateur> users = Arrays.asList(user);
+    user.setYearOfBirth(1989);
+    user.setPhone("0761705745");
+    List<UtilisateurBasicDTO> users = Arrays.asList(user);
     users.add(user);
 
     // When
