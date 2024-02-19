@@ -21,8 +21,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import eu.fr.indyli.formation.business.dto.UtilisateurBasicDTO;
-import eu.fr.indyli.formation.business.ecolis.service.impl.UtilisateurServiceImpl;
+import eu.fr.indyli.formation.business.dto.EcolisUserBasicDTO;
+import eu.fr.indyli.formation.business.ecolis.service.impl.EcolisUserServiceImpl;
 import eu.fr.indyli.formation.transactionnel.ecolis.boot.SpringConfigWebApplication;
 import eu.fr.indyli.formation.transactionnel.ecolis.utils.EcolisConstantesWeb.EcolisConstantesURI;
 
@@ -35,7 +35,7 @@ import eu.fr.indyli.formation.transactionnel.ecolis.utils.EcolisConstantesWeb.Ec
 public class UserRestControllerMockTest {
 
   @MockBean
-  private UtilisateurServiceImpl userService;
+  private EcolisUserServiceImpl userService;
 
 
   @Autowired
@@ -56,13 +56,13 @@ public class UserRestControllerMockTest {
   @Test
   public void itShouldReturnAllGivenUsers() throws Exception {
     // Given
-    UtilisateurBasicDTO user = new UtilisateurBasicDTO();
+    EcolisUserBasicDTO user = new EcolisUserBasicDTO();
     user.setId(2);
     user.setCivility("1");
     user.setName("Le Guene");
     user.setYearOfBirth(1989);
     user.setPhone("0761705745");
-    List<UtilisateurBasicDTO> users = Arrays.asList(user);
+    List<EcolisUserBasicDTO> users = Arrays.asList(user);
     users.add(user);
 
     // When

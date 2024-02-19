@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import eu.fr.indyli.formation.transactionnel.ecolis.form.PojoUserForm;
+import eu.fr.indyli.formation.business.dto.EcolisUserBasicDTO;
 import eu.fr.indyli.formation.transactionnel.ecolis.utils.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -49,7 +49,7 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(PojoUserForm user) {
+    public String generateToken(EcolisUserBasicDTO user) {
         return doGenerateToken(user.getLogin());
     }
 

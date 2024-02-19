@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ecolis-producer-service
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${random.int}

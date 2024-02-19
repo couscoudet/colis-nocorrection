@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import eu.fr.indyli.formation.transactionnel.ecolis.form.PojoUserForm;
+import eu.fr.indyli.formation.business.dto.EcolisUserBasicDTO;
 
 public class UserDbRestControllerTest {
 
@@ -18,7 +18,7 @@ public class UserDbRestControllerTest {
 	@Test
 	public void testGetUserById() throws Exception {
 	  Integer id = 2;
-	  PojoUserForm foundUser = new RestTemplate().getForObject(ECOLIS_URI_PREFIX+"/users/{userId}", PojoUserForm.class, id);
+	  EcolisUserBasicDTO foundUser = new RestTemplate().getForObject(ECOLIS_URI_PREFIX+"/users/{userId}", EcolisUserBasicDTO.class, id);
 	  System.out.println(foundUser);
 	 Assert.assertNotNull(foundUser);
 	}
@@ -26,26 +26,26 @@ public class UserDbRestControllerTest {
 	@Test
 	public void testGetAllUsers() throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<PojoUserForm>> response = restTemplate.exchange(
+		ResponseEntity<List<EcolisUserBasicDTO>> response = restTemplate.exchange(
 				ECOLIS_URI_PREFIX+"/users",
 		  HttpMethod.GET,
 		  null,
-		  new ParameterizedTypeReference<List<PojoUserForm>>(){});
-		List<PojoUserForm> userList = response.getBody();
+		  new ParameterizedTypeReference<List<EcolisUserBasicDTO>>(){});
+		List<EcolisUserBasicDTO> userList = response.getBody();
 		Assert.assertTrue(userList.size() >0);
 	}
 	
 	@Test
 	public void testCreateUser() throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
-		PojoUserForm userACreer = new PojoUserForm();
+		EcolisUserBasicDTO userACreer = new EcolisUserBasicDTO();
 		userACreer.setEmail("peter.spin.................@gmail.com");
-		userACreer.setAnneeDeNaissance(2000);
-		userACreer.setCivilite("1");
+		userACreer.setYearOfBirth(2000);
+		userACreer.setCivility("1");
 		userACreer.setLogin("peterSpin");
 		userACreer.setName("Peter2");
-		userACreer.setTelephone("0989876545");
-		userACreer.setDateInscription(new Date());
+		userACreer.setPhone("0989876545");
+		userACreer.setRegistrationDate(new Date());
 		Integer userIdResp = restTemplate.postForObject(ECOLIS_URI_PREFIX+"/users", userACreer, Integer.class);
 		Assert.assertTrue(userIdResp != null);
 	}

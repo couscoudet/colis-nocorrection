@@ -8,8 +8,8 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import eu.fr.indyli.formation.business.ecolis.exception.EcolisBusinessException;
-import eu.fr.indyli.formation.business.ecolis.service.IUtilisateurService;
-import eu.fr.indyli.formation.business.entity.Utilisateur;
+import eu.fr.indyli.formation.business.ecolis.service.IEcolisUserService;
+import eu.fr.indyli.formation.business.entity.EcolisUser;
 import eu.fr.indyli.formation.business.utils.EcolisConstantes;
 
 public class EmailValidator implements ConstraintValidator<EmailChecker, String>{
@@ -18,7 +18,7 @@ public class EmailValidator implements ConstraintValidator<EmailChecker, String>
 	private Matcher matcher;
 	
 	@Resource(name = EcolisConstantes.EcolisConstantesService.USER_SERVICE_KEY)
-	private IUtilisateurService userService = null;
+	private IEcolisUserService userService = null;
 	 public EmailValidator(){
 	 }
 
@@ -31,7 +31,7 @@ public class EmailValidator implements ConstraintValidator<EmailChecker, String>
 	}
 
 	public boolean isValid(String emailToValid, ConstraintValidatorContext arg1) {
-		Utilisateur userProp;
+		EcolisUser userProp;
 		try {
 			userProp = this.userService.findByEmail(emailToValid);
 			matcher = pattern.matcher(emailToValid);

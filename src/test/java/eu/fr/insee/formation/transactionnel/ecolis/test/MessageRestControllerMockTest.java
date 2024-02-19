@@ -25,10 +25,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import eu.fr.indyli.formation.business.dto.MessageBasicDTO;
-import eu.fr.indyli.formation.business.dto.MessageFullDTO;
-import eu.fr.indyli.formation.business.ecolis.service.impl.MessageServiceImpl;
-import eu.fr.indyli.formation.business.entity.Message;
+import eu.fr.indyli.formation.business.dto.EcolisMessageBasicDTO;
+import eu.fr.indyli.formation.business.dto.EcolisMessageFullDTO;
+import eu.fr.indyli.formation.business.ecolis.service.impl.EcolisMessageServiceImpl;
+import eu.fr.indyli.formation.business.entity.EcolisMessage;
 import eu.fr.indyli.formation.transactionnel.ecolis.boot.SpringConfigWebApplication;
 import eu.fr.indyli.formation.transactionnel.ecolis.utils.EcolisConstantesWeb.EcolisConstantesURI;
 
@@ -41,7 +41,7 @@ import eu.fr.indyli.formation.transactionnel.ecolis.utils.EcolisConstantesWeb.Ec
 public class MessageRestControllerMockTest {
 
   @MockBean
-  private MessageServiceImpl messageService;
+  private EcolisMessageServiceImpl messageService;
 
 
   @Autowired
@@ -51,7 +51,7 @@ public class MessageRestControllerMockTest {
   @Test
   public void itShouldReturnOneMessageById() throws Exception {
     // Given
-    MessageFullDTO message1 = new MessageFullDTO(1, "Pourrez vous déposer à Suresnes", new Date());
+    EcolisMessageFullDTO message1 = new EcolisMessageFullDTO(1, "Pourrez vous déposer à Suresnes", new Date());
     // When
     when(this.messageService.findById(1)).thenReturn(message1);
 
@@ -68,7 +68,7 @@ public class MessageRestControllerMockTest {
   public void itShouldReturnAllTheMessages() throws Exception {
     // Given
     // TODO : Initialiser la collection
-    List<MessageBasicDTO> messages = null;
+    List<EcolisMessageBasicDTO> messages = null;
 
     // When
     when(this.messageService.findAll()).thenReturn(messages);
@@ -84,9 +84,9 @@ public class MessageRestControllerMockTest {
   public void itShouldReturnMessageByEmail() throws Exception {
     // Given
     String email = "armee.gouv@gouv.fr";
-    Message message1 = new Message(1, "Pourrez vous déposer à Suresnes", new Date());
-    Message message2 = new Message(2, "Je vous attendrai entre 14h et 15h", new Date());
-    List<Message> messages = Arrays.asList(message1, message2);
+    EcolisMessage message1 = new EcolisMessage(1, "Pourrez vous déposer à Suresnes", new Date());
+    EcolisMessage message2 = new EcolisMessage(2, "Je vous attendrai entre 14h et 15h", new Date());
+    List<EcolisMessage> messages = Arrays.asList(message1, message2);
 
     // When
     when(this.messageService.getMessageByEmailUser(email)).thenReturn(messages);
