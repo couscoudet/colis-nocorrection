@@ -5,10 +5,14 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,13 +46,21 @@ public class EcolisAuthenticationController {
 	private ModelMapper modelMapper;
 
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
-    public ApiResponse<AuthToken> register(@RequestBody EcolisUserBasicDTO loginUser) throws AuthenticationException, EcolisBusinessException {
-
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getLogin(), loginUser.getPassword()));
-        final EcolisUser user = userService.findByLogin(loginUser.getLogin());
-        EcolisUserBasicDTO userDto =  modelMapper.map(user, EcolisUserBasicDTO.class);
-        final String token = jwtTokenUtil.generateToken(userDto);
-        return new ApiResponse<AuthToken>(200, "success",new AuthToken(token, user.getLogin()));
+    public ResponseEntity<ApiResponse<AuthToken>> register(@RequestBody EcolisUserBasicDTO loginUser) throws EcolisBusinessException {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getLogin(), loginUser.getPassword()));
+            final EcolisUser user = userService.findByLogin(loginUser.getLogin());
+            if (user == null) {
+                throw new UsernameNotFoundException("Utilisateur non trouvé pour le login: " + loginUser.getLogin());
+            }
+            EcolisUserBasicDTO userDto = modelMapper.map(user, EcolisUserBasicDTO.class);
+            final String token = jwtTokenUtil.generateToken(userDto);
+            return ResponseEntity.ok().body(new ApiResponse<>(200, "Success", new AuthToken(token, user.getLogin())));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(401, "Login ou mot de passe incorrect", null));
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(401, "Login ou mot de passe incorrect", null));
+        }
     }
     
     @RequestMapping(value = "/is-token-valid", method = RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
