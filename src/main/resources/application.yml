@@ -6,9 +6,10 @@ server:
 
 spring:
   datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/bd_colis_esic?autoReconnect=true&useSSL=false
-    username: root
-    password: Indyli@2023
+    jdbc-url: jdbc:mysql://localhost:3306/${YOUR_DATABASE_NAME}?autoReconnect=true&useSSL=false
+    username: ${YOUR_DATABASE_USER}
+    password: ${YOUR_DATABASE_PASSWORD}
+    driver-class-name: com.mysql.jdbc.Driver
     testWhileIdle: true
     validationQuery: SELECT 1
 
