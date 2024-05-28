@@ -11,7 +11,6 @@ import eu.fr.indyli.formation.transactionnel.ecolis.security.SecurityConfig;
 
 @SpringBootApplication
 @Import({EcolisBusinessConfig.class, WSConfig.class, SecurityConfig.class})
-
 public class SpringConfigWebApplication extends SpringBootServletInitializer {
 
   @Override
