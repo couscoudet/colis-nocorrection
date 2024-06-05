@@ -42,7 +42,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((request) -> request
 				.requestMatchers("/token/*", "/token/is-token-valid", "/signup")
-				.permitAll().anyRequest().authenticated())
+				.permitAll().anyRequest().permitAll())
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 

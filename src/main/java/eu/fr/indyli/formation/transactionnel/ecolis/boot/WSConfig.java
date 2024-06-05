@@ -16,14 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import eu.fr.indyli.formation.business.config.EcolisBusinessConfig;
+import eu.fr.indyli.formation.business.config.AppConfig;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("eu.fr.indyli.formation.transactionnel.ecolis.controller")
 @ComponentScan("eu.fr.insee.formation.transactionnel.ecolis.interceptor")
 @ComponentScan("eu.fr.insee.formation.transactionnel.ecolis.modele")
-@Import({EcolisBusinessConfig.class})
+@Import({AppConfig.class})
 public class WSConfig implements WebMvcConfigurer {
 	
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

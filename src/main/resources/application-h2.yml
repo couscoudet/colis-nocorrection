@@ -6,18 +6,18 @@ server:
 
 spring:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/${YOUR_DATABASE_NAME}
+    jdbc-url: jdbc:h2:mem:${YOUR_DATABASE_NAME};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: ${YOUR_DATABASE_USER}
     password: ${YOUR_DATABASE_PASSWORD}
-    driver-class-name: org.hibernate.dialect.PostgreSQLDialect
+    driver-class-name: org.h2.Driver
     testWhileIdle: true
     validationQuery: SELECT 1
 
   jpa:
     properties:
       hibernate:
-        show_sql: false
-      hibernate.ddl-auto: none
+        show_sql: true
+      hibernate.ddl-auto: update
       hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
   main:

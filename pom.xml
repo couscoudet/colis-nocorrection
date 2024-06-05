@@ -26,8 +26,8 @@
 	<dependencies> 
 	    <dependency>
 			<groupId>eu.fr.indyli.formation.business.ecolis</groupId>
-			<artifactId>ecoliss-business</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<artifactId>ecolis-business</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency> 
 	    <!-- Spring security -->
 		<dependency>
