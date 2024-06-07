@@ -20,7 +20,6 @@ import eu.fr.indyli.formation.business.dto.EcolisUserBasicDTO;
 import eu.fr.indyli.formation.business.dto.EcolisUserFullDTO;
 import eu.fr.indyli.formation.business.ecolis.exception.EcolisBusinessException;
 import eu.fr.indyli.formation.business.ecolis.service.IEcolisUserService;
-import eu.fr.indyli.formation.business.entity.EcolisUser;
 import eu.fr.indyli.formation.business.utils.EcolisConstantes.EcolisConstantesService;
 
 @RestController
@@ -36,7 +35,7 @@ public class EcolisUserRestController {
 		}
 	  
 	  @RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<?> creerNewUser(@RequestBody EcolisUser user) throws EcolisBusinessException {
+	  public ResponseEntity<?> creerNewUser(@RequestBody EcolisUserFullDTO user) throws EcolisBusinessException {
 		  
 	  	if(StringUtils.isBlank(user.getEmail()) || StringUtils.isBlank(user.getLogin())) {
 	  		return ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED) 
@@ -47,17 +46,16 @@ public class EcolisUserRestController {
 	  }
 	  
 	  @PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<EcolisUser> updateOneUser(@RequestBody EcolisUser user, @PathVariable("userId") Integer userId) throws EcolisBusinessException, AccessDeniedException {
+	  public ResponseEntity<EcolisUserFullDTO> updateOneUser(@RequestBody EcolisUserFullDTO user, @PathVariable("userId") Integer userId) throws EcolisBusinessException, AccessDeniedException {
 			
 		  EcolisUserFullDTO userFull = this.userService.findById(userId);
 		if (userFull == null) {
 			return ResponseEntity.notFound().build(); 
 		}
 
-		EcolisUser updateNewUser = this.userService.update(user);
+		EcolisUserFullDTO updateNewUser = this.userService.update(user);
 		return ResponseEntity.ok().body(updateNewUser);
 	  }
-
 	  
 	  @RequestMapping(value="/{userId}",method = RequestMethod.DELETE)
 	  public ResponseEntity<EcolisUserBasicDTO> deleteUserById(@PathVariable Integer userId) throws AccessDeniedException, EcolisBusinessException  {

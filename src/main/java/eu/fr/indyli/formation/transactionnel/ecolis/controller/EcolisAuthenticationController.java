@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import eu.fr.indyli.formation.business.dto.EcolisUserBasicDTO;
 import eu.fr.indyli.formation.business.ecolis.exception.EcolisBusinessException;
 import eu.fr.indyli.formation.business.ecolis.service.IEcolisUserService;
-import eu.fr.indyli.formation.business.entity.EcolisUser;
 import eu.fr.indyli.formation.transactionnel.ecolis.form.ApiResponse;
 import eu.fr.indyli.formation.transactionnel.ecolis.form.AuthToken;
 import eu.fr.indyli.formation.transactionnel.ecolis.security.JwtTokenUtil;
@@ -49,7 +48,7 @@ public class EcolisAuthenticationController {
     public ResponseEntity<ApiResponse<AuthToken>> register(@RequestBody EcolisUserBasicDTO loginUser) throws EcolisBusinessException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getLogin(), loginUser.getPassword()));
-            final EcolisUser user = userService.findByLogin(loginUser.getLogin());
+            final EcolisUserBasicDTO user = userService.findByLogin(loginUser.getLogin());
             if (user == null) {
                 throw new UsernameNotFoundException("Utilisateur non trouvé pour le login: " + loginUser.getLogin());
             }
