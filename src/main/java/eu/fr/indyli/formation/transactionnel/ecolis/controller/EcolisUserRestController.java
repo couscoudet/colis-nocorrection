@@ -27,44 +27,44 @@ import eu.fr.indyli.formation.business.utils.EcolisConstantes.EcolisConstantesSe
 public class EcolisUserRestController {
 
 	@Resource(name = EcolisConstantesService.USER_SERVICE_KEY)
-	  IEcolisUserService userService;
-	  
-	  @RequestMapping(method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-		public List<EcolisUserBasicDTO> listUsers() {
-			return this.userService.findAll();
+	IEcolisUserService userService;
+
+	@RequestMapping(method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<EcolisUserBasicDTO> listUsers() {
+		return this.userService.findAll();
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> creerNewUser(@RequestBody EcolisUserFullDTO user) throws EcolisBusinessException {
+
+		if(StringUtils.isBlank(user.getEmail()) || StringUtils.isBlank(user.getLogin())) {
+			return ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED) 
+					.body("L'email ou le login semble non renseigné...");
 		}
-	  
-	  @RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<?> creerNewUser(@RequestBody EcolisUserFullDTO user) throws EcolisBusinessException {
-		  
-	  	if(StringUtils.isBlank(user.getEmail()) || StringUtils.isBlank(user.getLogin())) {
-	  		return ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED) 
-	  	            .body("L'email ou le login semble non renseigné...");
-	  	}
-	  	
+
 		return ResponseEntity.ok(this.userService.create(user));
-	  }
-	  
-	  @PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<EcolisUserFullDTO> updateOneUser(@RequestBody EcolisUserFullDTO user, @PathVariable("userId") Integer userId) throws EcolisBusinessException, AccessDeniedException {
-			
-		  EcolisUserFullDTO userFull = this.userService.findById(userId);
+	}
+
+	@PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EcolisUserFullDTO> updateOneUser(@RequestBody EcolisUserFullDTO user, @PathVariable("userId") Integer userId) throws EcolisBusinessException, AccessDeniedException {
+
+		EcolisUserFullDTO userFull = this.userService.findById(userId);
 		if (userFull == null) {
 			return ResponseEntity.notFound().build(); 
 		}
 
 		EcolisUserFullDTO updateNewUser = this.userService.update(user);
 		return ResponseEntity.ok().body(updateNewUser);
-	  }
-	  
-	  @RequestMapping(value="/{userId}",method = RequestMethod.DELETE)
-	  public ResponseEntity<EcolisUserBasicDTO> deleteUserById(@PathVariable Integer userId) throws AccessDeniedException, EcolisBusinessException  {
+	}
+
+	@RequestMapping(value="/{userId}",method = RequestMethod.DELETE)
+	public ResponseEntity<EcolisUserBasicDTO> deleteUserById(@PathVariable Integer userId) throws AccessDeniedException, EcolisBusinessException  {
 		this.userService.deleteById(userId);
 		return ResponseEntity.ok().build(); 
-	  }
-	  
-	  @RequestMapping(value="/{userId}",method = RequestMethod.GET)
-	  public EcolisUserFullDTO findUser(@PathVariable Integer userId) throws EcolisBusinessException  {
+	}
+
+	@RequestMapping(value="/{userId}",method = RequestMethod.GET)
+	public EcolisUserFullDTO findUser(@PathVariable Integer userId) throws EcolisBusinessException  {
 		return this.userService.findById(userId);
-	  }
+	}
 }

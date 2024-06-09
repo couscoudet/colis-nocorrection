@@ -40,10 +40,14 @@ public class SecurityConfig {
 	// Configuring HttpSecurity
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((request) -> request
+		return http.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests((request) -> request
 				.requestMatchers("/token/*", "/token/is-token-valid", "/signup")
-				.permitAll().anyRequest().permitAll())
-				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
+				.permitAll()
+				.anyRequest()
+				.permitAll())
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	// Password Encoding
